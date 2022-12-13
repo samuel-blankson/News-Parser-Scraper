@@ -36,6 +36,8 @@ services:
         build:
             context: .
             dockerfile: Dockerfile-nginx
+        depends_on:
+          - "php"     
         volumes:
           - ./newsapp/:/var/www/project/
         ports:
@@ -46,6 +48,8 @@ services:
         build:
             context: .
             dockerfile: Dockerfile-cron
+        depends_on:
+          - "php"    
         environment:
           - DATABASE_URL=mysql://nodeDB:rootroot@nodedb.ceer1geqiqbm.eu-west-2.rds.amazonaws.com:3306/newsapp?serverVersion=14&charset=utf8
           - MESSENGER_TRANSPORT_DSN=amqp://guest:guest@localhost:5672/%2f/messages # AMQP connection string

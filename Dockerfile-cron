@@ -15,5 +15,4 @@ RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/lo
 COPY newsapp/ /var/www/project
 COPY ./build/cron/script /var/www/scripts/
 WORKDIR /var/www/project/
-CMD composer require --dev dbrekelmans/bdi && vendor/bin/bdi detect drivers; bin/console doctrine:migrations:migrate ;
 ENTRYPOINT ["bash", "/var/www/scripts/message_script.sh"]
