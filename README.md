@@ -6,7 +6,7 @@ symfony php app for scraping news off from news sorces
 
 - docker-compose up -d
 
-# PORT = 80001 default 
+# PORT = 8001 default 
 
 
 
