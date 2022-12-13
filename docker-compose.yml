@@ -1,0 +1,67 @@
+version: '3'
+
+services:   
+    rabbitmq:
+        image: rabbitmq:3.9-management
+        ports: 
+          - 5672:5672
+          - 15672:15672
+        volumes:
+          - rabbitmq:/var/lib/rabbitmq:cached  
+        networks:
+          - symfony   
+    # database:
+    #     image: 'mysql:8.0'
+    #     volumes:
+    #       - db-data:/var/lib/mysql:cached
+        # environment:
+        #     MYSQL_ROOT_PASSWORD: root
+        #     MYSQL_DATABASE: main
+        # ports:
+        #   - 13306:3306
+        # networks:
+        #   - symfony 
+    php:
+        build: 
+            context: .
+            dockerfile: Dockerfile-php
+        environment: 
+          - DATABASE_URL=mysql://nodeDB:rootroot@nodedb.ceer1geqiqbm.eu-west-2.rds.amazonaws.com:3306/newsapp?serverVersion=14&charset=utf8 # Connection string for the database.
+          - MESSENGER_TRANSPORT_DSN=amqp://guest:guest@localhost:5672/%2f/messages # AMQP connection string
+        volumes:
+          - ./newsapp/:/var/www/project/ 
+        networks:
+          - symfony 
+    nginx:
+        build:
+            context: .
+            dockerfile: Dockerfile-nginx
+        volumes:
+          - ./newsapp/:/var/www/project/
+        ports:
+          - 8001:80 # Ports that are exposed, you can connect to port 8001 to port 80 of the container.
+        networks:
+          - symfony
+    php-cron:
+        build:
+            context: .
+            dockerfile: Dockerfile-cron
+        environment:
+          - DATABASE_URL=mysql://nodeDB:rootroot@nodedb.ceer1geqiqbm.eu-west-2.rds.amazonaws.com:3306/newsapp?serverVersion=14&charset=utf8
+          - MESSENGER_TRANSPORT_DSN=amqp://guest:guest@localhost:5672/%2f/messages # AMQP connection string
+        volumes:
+          - ./newsapp/:/var/www/project/
+        networks:
+          - symfony             
+        
+               
+
+volumes:
+  db-data:
+  rabbitmq:
+
+
+networks:
+ symfony:
+   
+        

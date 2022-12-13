@@ -1,0 +1,10 @@
+php bin/console make:docker:database 
+symfony console make:migration 
+symfony console doctrine:migrations:migrate
+symfony var:export --multiline  
+
+
+
+symfony console parse-news-source "https://dataquestio.github.io/web-scraping-pages/simple.html" "body" "p" "p" "p"
+
+docker exec -it container-name bash

@@ -1,0 +1,12 @@
+login:
+   path: /Login
+   controller: App\Controller\SecurityController::login
+
+
+index:
+    path: /
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
+    defaults:
+        path: /Login
+        permanent: true
+

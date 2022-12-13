@@ -1,0 +1,55 @@
+{# {% extends 'base.html.twig' %} #}
+{% include 'include/header.php' %}
+
+{# {% block title %}Hello NewsController!{% endblock %} #}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 1500px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper" style="width: 100%;">
+    {# <h1>Current News</h1> #}
+    <div class="container d-inline-block overflow-auto" style="width: 100%; max-height:600px; ">
+    <ul >
+    {% for news in newsList %}
+        <div class="mb-2 p-2" style="width: 100%; min-height:250px; background-color: rgba(0,0,255,.1)">
+        <div class="row">
+        <div class="col-sm-8 fw-bold" >{{news.title}}</div>
+        <div class="col-sm-4" ><img style="width:200px" src="{{news.picture}}" /></div>
+        </div>
+        <div class="row ">
+        <div class="text-wrap fw-light" style="width: 100rem;">{{news.shortDescription}}</div>
+        </div>
+         <div class="row mt-3">
+          <div class="col-sm-8 fst-italic" >{{news.lastUpdatedAt |date('d-m-Y')}}</div>
+          {% if is_granted('ROLE_ADMIN')%}
+          <a class="col-sm-2 btn btn-danger" href="{{ path('delete_news', { title: news.title }) }}">Delete</a>
+          {% endif %}
+         </div>
+        </div>
+    {% endfor %}    
+        
+    </ul>
+     </div>
+
+
+    <div class="position-static mb-1">
+     {% if previous >= 0 %}
+     
+           <a class="btn btn-dark w-25 m-3" href="{{ path('app_news', { offset: previous }) }}">Previous</a>
+       {% endif %}
+       {% if next < newsList|length %}
+           <a class="btn btn-dark w-25 m-3" href="{{ path('app_news', { offset: next }) }}">Next</a>
+    {% endif %}
+    </div>
+
+   
+     {# {% else %}
+         <div>No comments have been posted yet for this conference.</div>
+     {% endif %} #}
+
+</div>
+{% endblock %}
+{% include 'include/footer.php' %}

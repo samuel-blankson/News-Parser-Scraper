@@ -1,0 +1,46 @@
+version: '3.4'
+
+services:   
+    rabbitmq:
+        image: rabbitmq:3.9-management
+        ports: 
+          - 5672:5672
+          - 15672:15672
+        networks:
+          - symfony   
+    database:
+        image: 'mysql:8.0'
+        user: "1000:50"
+        volumes:
+          - db-data:/var/lib/mysql/data:rw
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: main
+        ports:
+          - "13306:3306"
+        networks:
+          - symfony 
+    app:
+        ports:
+          - "80:80"
+        environment:
+          - APACHE_DOCUMENT_ROOT=/var/www/html/app/public  
+        build:
+          context: .
+        depends_on:
+          - database
+          - rabbitmq
+        volumes:
+          - .:/var/www/html   
+          - ./config/vhost.conf:/etc/apache2/sites-available/000-default.conf   
+        
+               
+
+volumes:
+  db-data:
+
+
+networks:
+ symfony:
+   
+        

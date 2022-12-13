@@ -1,0 +1,25 @@
+###> symfony/framework-bundle ###
+/newsapp/.env.local
+/newsapp/.env.local.php
+/newsapp/.env.*.local
+/newsapp/config/secrets/prod/prod.decrypt.private.php
+/newsapp/public/bundles/
+/newsapp/var/
+/newsapp/vendor/
+###< symfony/framework-bundle ###
+
+###> phpunit/phpunit ###
+/newsapp/phpunit.xml
+/newsapp/.phpunit.result.cache
+###< phpunit/phpunit ###
+
+###> symfony/phpunit-bridge ###
+/newsapp/.phpunit.result.cache
+/newsapp/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> symfony/web-server-bundle ###
+/newsapp/.web-server-pid
+###< symfony/web-server-bundle ###
+
+/newsappmysql
