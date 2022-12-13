@@ -68,15 +68,15 @@ class ParseNewsSourceCommand extends Command
         }
 
         if ($titleSelector) {
-            $io->note(sprintf('You passed a titleSelector argument: %s', $titleSelector));
+            $io->note(sprintf('You passed a title-Selector argument: %s', $titleSelector));
         }
 
         if ($shortDescriptionSelector) {
-            $io->note(sprintf('You passed a shortDescriptionSelector argument: %s', $shortDescriptionSelector));
+            $io->note(sprintf('You passed a shortDescription-Selector argument: %s', $shortDescriptionSelector));
         }
 
         if ($imageSelector) {
-            $io->note(sprintf('You passed a shortDescriptionSelector argument: %s', $imageSelector));
+            $io->note(sprintf('You passed a Image-Selector argument: %s', $imageSelector));
         }
 
        $newsData = $this->scraper->scrap($url,$wrapperSelector,$titleSelector,$shortDescriptionSelector,$imageSelector);
